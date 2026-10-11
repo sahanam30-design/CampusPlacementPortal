@@ -1,0 +1,540 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect | Placement Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6fb;
+            color: #1e293b;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 245px;
+            height: 100vh;
+            background: #172554;
+            color: white;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .brand span {
+            color: #93c5fd;
+        }
+
+        .sidebar p {
+            color: #cbd5e1;
+            font-size: 13px;
+            margin-bottom: 35px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 1.5px;
+            margin: 25px 0 12px;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 14px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Main content */
+        .main {
+            margin-left: 245px;
+            padding: 32px 38px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            font-size: 25px;
+        }
+
+        .topbar p {
+            color: #64748b;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .status {
+            background: #dcfce7;
+            color: #166534;
+            padding: 9px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Welcome banner */
+        .welcome {
+            background: linear-gradient(120deg, #1d4ed8, #4338ca);
+            color: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+
+        .welcome .eyebrow {
+            color: #dbeafe;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .welcome h1 {
+            font-size: 29px;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #e0e7ff;
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        /* Statistics cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 34px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border: 1px solid #e5eaf3;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .stat-blue {
+            background: #dbeafe;
+        }
+
+        .stat-purple {
+            background: #ede9fe;
+        }
+
+        .stat-orange {
+            background: #ffedd5;
+        }
+
+        .stat-green {
+            background: #dcfce7;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 38px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: 750;
+            color: #172554;
+            overflow-wrap: anywhere;
+        }
+
+        /* Portal section */
+        .section-title {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 26px;
+            border-radius: 13px;
+            border: 1px solid #e5eaf3;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
+        }
+
+        .card-icon {
+            display: flex;
+            width: 46px;
+            height: 46px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .blue {
+            background: #dbeafe;
+        }
+
+        .purple {
+            background: #ede9fe;
+        }
+
+        .orange {
+            background: #ffedd5;
+        }
+
+        .green {
+            background: #dcfce7;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 9px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 48px;
+            margin-bottom: 18px;
+        }
+
+        .card a {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        /* About section */
+        .bottom-note {
+            margin-top: 30px;
+            background: white;
+            border: 1px solid #e5eaf3;
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .bottom-note h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .bottom-note p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 30px;
+            padding-bottom: 10px;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 1150px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .sidebar p,
+            .nav-label {
+                display: none;
+            }
+
+            .sidebar nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 15px;
+                gap: 5px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 22px 16px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 25px;
+            }
+
+            .welcome h1 {
+                font-size: 24px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand">Campus<span>Connect</span></div>
+        <p>Placement &amp; Recruitment Portal</p>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <nav>
+            <a href="/" class="active">⌂ &nbsp; Dashboard</a>
+            <a href="/students">♙ &nbsp; Students</a>
+            <a href="/companies">▣ &nbsp; Companies</a>
+            <a href="/jobs">▤ &nbsp; Job Opportunities</a>
+            <a href="/placements">✓ &nbsp; Placements</a>
+        </nav>
+    </aside>
+
+    <!-- Main Dashboard -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2>Dashboard Overview</h2>
+                <p>Manage campus recruitment from one place.</p>
+            </div>
+
+            <div class="status">● Portal Dashboard</div>
+        </header>
+
+        <!-- Welcome Banner -->
+        <section class="welcome">
+            <div class="eyebrow">CAMPUS PLACEMENT MANAGEMENT</div>
+
+            <h1>Welcome to CampusConnect!</h1>
+
+            <p>
+                Your central hub for student profiles, company recruitment,
+                job opportunities and placement records. Explore the portal
+                to manage and review placement information.
+            </p>
+        </section>
+
+        <!-- Live Database Statistics -->
+        <section class="stats-grid" aria-label="Database statistics">
+
+            <article class="stat-card">
+                <div class="stat-icon stat-blue">🎓</div>
+                <div class="stat-label">Total Students</div>
+                <div class="stat-number">
+                    {{ stats.get('student', 0) }}
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon stat-purple">🏢</div>
+                <div class="stat-label">Recruiting Companies</div>
+                <div class="stat-number">
+                    {{ stats.get('company', 0) }}
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon stat-orange">💼</div>
+                <div class="stat-label">Job Opportunities</div>
+                <div class="stat-number">
+                    {{ stats.get('job', 0) }}
+                </div>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon stat-green">🏆</div>
+                <div class="stat-label">Placement Records</div>
+                <div class="stat-number">
+                    {{ stats.get('placement', 0) }}
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Portal Navigation Cards -->
+        <section>
+            <h2 class="section-title">Explore Your Portal</h2>
+
+            <p class="section-description">
+                Select a section to view its records and information.
+            </p>
+
+            <div class="cards">
+
+                <article class="card">
+                    <div class="card-icon blue">♙</div>
+                    <h3>Student Directory</h3>
+                    <p>
+                        View student profiles, academic details,
+                        skills and placement eligibility information.
+                    </p>
+                    <a href="/students">View Students →</a>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon purple">▣</div>
+                    <h3>Recruiting Companies</h3>
+                    <p>
+                        Explore company information and review
+                        organizations participating in campus recruitment.
+                    </p>
+                    <a href="/companies">View Companies →</a>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon orange">▤</div>
+                    <h3>Job Opportunities</h3>
+                    <p>
+                        Browse job listings and review available
+                        positions offered by recruiting companies.
+                    </p>
+                    <a href="/jobs">Explore Jobs →</a>
+                </article>
+
+                <article class="card">
+                    <div class="card-icon green">✓</div>
+                    <h3>Placement Records</h3>
+                    <p>
+                        Review placement outcomes and track successful
+                        student placements and package information.
+                    </p>
+                    <a href="/placements">View Placements →</a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- About the Project -->
+        <section class="bottom-note">
+            <h3>About the Portal</h3>
+
+            <p>
+                CampusConnect is a database-driven campus placement
+                management system designed to organize student information,
+                employer details, job opportunities and placement records
+                using a centralized MySQL database and a Flask backend.
+            </p>
+        </section>
+
+        <footer>
+            Campus Placement &amp; Recruitment Portal
+            &nbsp;|&nbsp; Academic DBMS Project
+        </footer>
+
+    </main>
+
+</body>
+</html>
+```
